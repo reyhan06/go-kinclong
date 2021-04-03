@@ -5,9 +5,12 @@ namespace App\Models;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\{
+    Schedule,
     Service,
-    Review
+    Review,
+    User
 };
+use Str;
 
 class Book extends Model
 {
@@ -20,6 +23,7 @@ class Book extends Model
      */
     protected $fillable = [
         'customer_id',
+        'code',
         'invoice_number',
         'customer_name',
         'customer_phone',
@@ -55,6 +59,22 @@ class Book extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    /**
+     * Get the customer that owns the book.
+     */
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customer_id', 'id');
+    }
+
+    /**
+     * Get the schedule associated with the book.
+     */
+    public function schedule()
+    {
+        return $this->hasOne(Schedule::class);
     }
 
     /**
@@ -126,7 +146,7 @@ class Book extends Model
                 $next_possible_states = [$state[1], $state[4]]; // processed, canceled
                 break;
             case $states[1]: // processed
-                $next_possible_states = [$state[2], $state[3], $state[4]]; // processed, failed, canceled
+                $next_possible_states = [$state[2], $state[3], $state[4]]; // finished, failed, canceled
                 break;
 
             default:
@@ -134,5 +154,20 @@ class Book extends Model
         }
 
         return $next_possible_states;
+    }
+
+    /**
+     * Generate new booking code
+     *
+     * @param string $date
+     * @return string
+     */
+    public static function generateCode($date)
+    {
+        $date_identifier = date('ymdHis'($data['date']));
+        $random_str = Str::random(8);
+        $booking_code = "BOOK/{$date_identifier}/{$random_str}";
+
+        return $booking_code;
     }
 }

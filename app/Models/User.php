@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Book;
 
 class User extends Authenticatable
 {
@@ -18,6 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
+        'phone',
+        'type',
         'email',
         'password',
     ];
@@ -40,4 +44,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Admin type.
+     *
+     * @var string
+     */
+    const ADMIN_TYPE = 'admin';
+
+    /**
+     * Custome type.
+     *
+     * @var string
+     */
+    const CUSTOMER_TYPE = 'customer';
+
+    /**
+     * Get the books for the user.
+     */
+    public function books()
+    {
+        return $this->hasMany(Book::class, 'customer_id', 'id');
+    }
 }

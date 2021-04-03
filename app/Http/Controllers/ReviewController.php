@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\{
+    Book,
+    Review
+};
+use App\Http\Requests\BookRequest;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -23,18 +28,28 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        // return view('reviews.create', $array);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  ReviewRequest  $request
+     * @param  int  $book_id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ReviewRequest $request, $book_id)
     {
-        //
+        $new_review = $request->validated();
+
+        $book = Book::withCount('review')->findOrFail($book_id);
+        if ($book->review_count != 0) {
+            return back()->withErrors('message', 'Maaf, Anda tidak dapat membuat ulasan baru karena bookingan ini sudah memiliki ulasan.');
+        }
+
+        $review = $book->review()->create($new_review);
+
+        // return route('books.show', $book->id);
     }
 
     /**

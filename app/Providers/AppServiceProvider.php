@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // This will only accept alpha and spaces.
+        \Validator::extend('alpha_spaces', function ($attribute, $value) {
+            // If you want to accept hyphens use: /^[\pL\s-]+$/u.
+            return preg_match('/^[\pL\s]+$/u', $value);
+
+        });
     }
 }

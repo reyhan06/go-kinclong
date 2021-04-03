@@ -17,7 +17,8 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->foreignId('customer_id');
             $table->foreign('customer_id')->references('id')->on('users');
-            $table->string('invoice_number')->unique();
+            $table->string('code')->unique();
+            $table->string('invoice_number')->unique()->nullable();
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->string('vehicle_type');
@@ -30,7 +31,8 @@ class CreateBooksTable extends Migration
             $table->integer('service_cost');
             $table->enum('state', ['new', 'processed', 'finished', 'failed', 'canceled'])->default('new');
             $table->string('receipt')->nullable();
-            $table->datetime('date');
+            $table->datetime('schedule_start_at');
+            $table->datetime('schedule_end_at')->nullable();
             $table->timestamps();
         });
     }

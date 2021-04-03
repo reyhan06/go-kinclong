@@ -18,7 +18,6 @@ class CreateReviewsTable extends Migration
             $table->foreignId('book_id')->constrained();
             $table->string('description')->nullable();
             $table->integer('stars');
-            $table->date('reviewed_at');
             $table->timestamps();
         });
     }

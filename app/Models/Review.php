@@ -19,7 +19,6 @@ class Review extends Model
         'book_id',
         'description',
         'stars',
-        'reviewed_at',
     ];
 
     /**

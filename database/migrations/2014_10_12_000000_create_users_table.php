@@ -42,6 +42,17 @@ class CreateUsersTable extends Migration
                         'created_at' => $now,
                         'updated_at' => $now,
                     ],
+                    [
+                        'id' => 2,
+                        'name' => 'Pelanggan',
+                        'username' => 'pelanggan01',
+                        'phone' => '082258843864',
+                        'type' => 'customer',
+                        'email' => 'pelanggan01@gmail.com',
+                        'password' => bcrypt('asdfghjkl'),
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ],
                 ]);
             }
         );
@@ -56,7 +67,7 @@ class CreateUsersTable extends Migration
     {
         DB::transaction(
             function() {
-                DB::table('users')->whereIn('id', [1])->delete();
+                DB::table('users')->whereIn('id', [1, 2])->delete();
             }
         );
 
