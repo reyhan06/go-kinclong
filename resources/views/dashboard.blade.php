@@ -22,15 +22,10 @@
         <div class="content-header-left col-md-9 col-12 mb-2">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h2 class="content-header-title float-left mb-0">Input</h2>
+                    <h2 class="content-header-title float-left mb-0">Home</h2>
                     <div class="breadcrumb-wrapper">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a>
-                            </li>
-                            <li class="breadcrumb-item"><a href="#">Form Elements</a>
-                            </li>
-                            <li class="breadcrumb-item active">Input
-                            </li>
+                            <li class="breadcrumb-item active">Home</li>
                         </ol>
                     </div>
                 </div>
@@ -38,200 +33,158 @@
         </div>
         <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
             <div class="form-group breadcrumb-right">
-                <div class="dropdown">
-                    <button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i></button>
-                    <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="app-todo.html"><i class="mr-1" data-feather="check-square"></i><span class="align-middle">Todo</span></a><a class="dropdown-item" href="app-chat.html"><i class="mr-1" data-feather="message-square"></i><span class="align-middle">Chat</span></a><a class="dropdown-item" href="app-email.html"><i class="mr-1" data-feather="mail"></i><span class="align-middle">Email</span></a><a class="dropdown-item" href="app-calendar.html"><i class="mr-1" data-feather="calendar"></i><span class="align-middle">Calendar</span></a></div>
-                </div>
+                <button type="button" class="btn btn-primary waves-effect waves-float waves-light">Book Now</button>
             </div>
         </div>
     </div>
     <div class="content-body">
-        <!-- Basic Inputs start -->
-        <section id="basic-input">
+        <!-- Open Book start -->
+        <section id="open-book">
+            <h5 class="mb-2">Bookingan Aktif</h5>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Basic Inputs</h4>
-                        </div>
+                <div class="col-md-6 col-xl-12">
+                    <div class="card text-center shadow-none bg-transparent border-primary">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                    <div class="form-group">
-                                        <label for="basicInput">Basic Input</label>
-                                        <input type="text" class="form-control" id="basicInput" placeholder="Enter email" />
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                    <div class="form-group">
-                                        <label for="helpInputTop">Input text with help</label>
-                                        <small class="text-muted">eg.<i>someone@example.com</i></small>
-                                        <input type="text" class="form-control" id="helpInputTop" />
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6 col-12 mb-1">
-                                    <div class="form-group">
-                                        <label for="disabledInput">Disabled Input</label>
-                                        <input type="text" class="form-control" id="disabledInput" disabled />
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="helperText">With Helper Text</label>
-                                        <input type="text" id="helperText" class="form-control" placeholder="Name" />
-                                        <p><small class="text-muted">Find helper text here for given textbox.</small></p>
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="disabledInput">Readonly Input</label>
-                                        <input type="text" class="form-control" id="readonlyInput" readonly="readonly" value="You can't update me :P" />
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label for="disabledInput">Readonly Static Text</label>
-                                        <p class="form-control-static" id="staticInput">email@pixinvent.com</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <h4 class="card-title">Saat ini anda belum memiliki Bookingan yang aktif</h4>
+                            <p class="card-text">Silahkan tekan tombol <strong>Book Now</strong> di atas yah</p>
                         </div>
                     </div>
                 </div>
             </div>
+            {{-- <div class="row match-height">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-app-design border-primary mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="badge badge-light-primary">03 Sep, 20</div>
+                                <div class="badge badge-pill badge-light-primary">New</div>
+                            </div>
+                            <h4 class="card-title">Cuci Mobil Small Reguler Interior dan Eksterior</h4>
+                            <p class="card-text">Toyota dengan nomor plat <strong>B 1234 CD</strong>.<br>Status: <strong>sedang menunggu konfirmasi</strong></p>
+                            <div class="design-planning-wrapper">
+                                <div class="design-planning">
+                                    <p class="card-text mb-25">Date</p>
+                                    <h6 class="mb-0">12 Apr, 21 - 10.00</h6>
+                                </div>
+                                <div class="design-planning">
+                                    <p class="card-text mb-25">Cost</p>
+                                    <h6 class="mb-0">Rp. 50.000</h6>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary waves-effect">View details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-app-design border-primary mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="badge badge-light-primary">03 Sep, 20</div>
+                                <div class="badge badge-pill badge-light-info">Process</div>
+                            </div>
+                            <h4 class="card-title">Cuci Motor Small Waterless</h4>
+                            <p class="card-text">Honda dengan nomor plat <strong>B 567 EF</strong>.<br>Status: <strong>Menunggu jadwal layanan tiba</strong></p>
+                            <div class="design-planning-wrapper">
+                                <div class="design-planning">
+                                    <p class="card-text mb-25">Date</p>
+                                    <h6 class="mb-0">12 Apr, 21 - 10.00</h6>
+                                </div>
+                                <div class="design-planning">
+                                    <p class="card-text mb-25">Cost</p>
+                                    <h6 class="mb-0">Rp. 50.000</h6>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary waves-effect">View details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card card-app-design border-primary mb-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="badge badge-light-primary">03 Sep, 20</div>
+                                <div class="badge badge-pill badge-light-primary">New</div>
+                            </div>
+                            <h4 class="card-title">Cuci Mobil Small Reguler Interior dan Eksterior</h4>
+                            <p class="card-text">Toyota dengan nomor plat <strong>B 1234 CD</strong>.<br>Status: <strong>sedang menunggu konfirmasi</strong></p>
+                            <div class="design-planning-wrapper">
+                                <div class="design-planning">
+                                    <p class="card-text mb-25">Date</p>
+                                    <h6 class="mb-0">12 Apr, 21 - 10.00</h6>
+                                </div>
+                                <div class="design-planning">
+                                    <p class="card-text mb-25">Cost</p>
+                                    <h6 class="mb-0">Rp. 50.000</h6>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary waves-effect">View details</a>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
         </section>
-        <!-- Basic Inputs end -->
+        <!-- Open Book end -->
 
-        <!-- Input Sizing start -->
-        <section id="input-sizing">
+        <!-- Book Statistics start -->
+        <section id="open-book">
+            <h5 class="mb-2">Info Bookingan</h5>
             <div class="row match-height">
-                <div class="col-md-6 col-12">
-                    <div class="card">
+                <div class="col-lg-8 col-12">
+                    <div class="card card-statistics">
                         <div class="card-header">
-                            <h4 class="card-title">Sizing Options</h4>
+                            <h4 class="card-title">Statistik</h4>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body statistics-body">
                             <div class="row">
-                                <div class="col-12">
-                                    <p class="card-text">
-                                        For different sizes of Input, Use classes like <code>.form-control-lg</code> &amp;
-                                        <code>.form-control-sm</code> for Large, Small input box.
-                                    </p>
-                                    <div class="form-group">
-                                        <label for="largeInput">Large</label>
-                                        <input id="largeInput" class="form-control form-control-lg" type="text" placeholder="Large Input" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="defaultInput">Default</label>
-                                        <input id="defaultInput" class="form-control" type="text" placeholder="Normal Input" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="smallInput">Small</label>
-                                        <input id="smallInput" class="form-control form-control-sm" type="text" placeholder="Small Input" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Horizontal form label sizing</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p class="card-text mb-2">
-                                        Be sure to use <code>.col-form-label-sm</code> or <code>.col-form-label-lg</code> to your
-                                        <code>&lt;label&gt;</code>s or <code>&lt;legend&gt;</code>s to correctly follow the size of
-                                        <code>.form-control-lg</code> and <code>.form-control-sm</code>.
-                                    </p>
-                                    <div class="form-group row">
-                                        <label for="colFormLabelLg" class="col-sm-3 col-form-label col-form-label-lg">Large</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control form-control-lg" id="colFormLabelLg" placeholder="Large Input" />
+                                <div class="col-md-3 col-sm-6 col-12 mb-2 mb-md-0">
+                                    <div class="media">
+                                        <div class="avatar bg-light-primary mr-2">
+                                            <div class="avatar-content">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up avatar-icon"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="colFormLabel" class="col-sm-3 col-form-label">Default</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control" id="colFormLabel" placeholder="Normal Input" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="colFormLabelSm" class="col-sm-3 col-form-label col-form-label-sm">Small</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Small Input" />
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">230k</h4>
+                                            <p class="card-text font-small-3 mb-0">Sales</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Input Sizing end -->
-
-        <!-- Floating Label Inputs start -->
-        <section id="floating-label-input">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Floating Label Inputs</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 mb-1">
-                                    <p>
-                                        For Floating Label Inputs, need to use <code>.form-label-group</code> class & add attribute
-                                        <code>disabled</code> for disabled Floating Label Input.
-                                    </p>
-                                </div>
-                                <div class="col-sm-6 col-12">
-                                    <div class="form-label-group">
-                                        <input type="text" class="form-control" id="floating-label1" placeholder="Label-placeholder" />
-                                        <label for="floating-label1">Label-placeholder</label>
+                                <div class="col-md-3 col-sm-6 col-12 mb-2 mb-md-0">
+                                    <div class="media">
+                                        <div class="avatar bg-light-info mr-2">
+                                            <div class="avatar-content">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user avatar-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            </div>
+                                        </div>
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">8.549k</h4>
+                                            <p class="card-text font-small-3 mb-0">Customers</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-12">
-                                    <div class="form-label-group">
-                                        <input type="text" class="form-control" id="floating-label-disable" placeholder="Label-placeholder" disabled />
-                                        <label for="floating-label-disable">Disabled-placeholder</label>
+                                <div class="col-md-3 col-sm-6 col-12 mb-2 mb-sm-0">
+                                    <div class="media">
+                                        <div class="avatar bg-light-danger mr-2">
+                                            <div class="avatar-content">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box avatar-icon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                            </div>
+                                        </div>
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">1.423k</h4>
+                                            <p class="card-text font-small-3 mb-0">Products</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Floating Label Inputs end -->
-
-        <!-- Basic File Browser start -->
-        <section id="input-file-browser">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">File input</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label for="basicInputFile">Simple File Input</label>
-                                        <input type="file" class="form-control-file" id="basicInputFile" />
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-12">
-                                    <div class="form-group">
-                                        <label for="customFile">With Browse button</label>
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="customFile" />
-                                            <label class="custom-file-label" for="customFile">Choose file</label>
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <div class="media">
+                                        <div class="avatar bg-light-success mr-2">
+                                            <div class="avatar-content">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign avatar-icon"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                            </div>
+                                        </div>
+                                        <div class="media-body my-auto">
+                                            <h4 class="font-weight-bolder mb-0">$9745</h4>
+                                            <p class="card-text font-small-3 mb-0">Revenue</p>
                                         </div>
                                     </div>
                                 </div>
@@ -239,83 +192,156 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-2 col-md-4 col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="avatar bg-light-info p-50 mb-1">
+                                <div class="avatar-content">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye font-medium-5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </div>
+                            </div>
+                            <h2 class="font-weight-bolder">2</h2>
+                            <p class="card-text">Jadwal bookingan hari ini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-4 col-sm-6">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <div class="avatar bg-light-info p-50 mb-1">
+                                <div class="avatar-content">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye font-medium-5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                </div>
+                            </div>
+                            <h2 class="font-weight-bolder">3</h2>
+                            <p class="card-text">Bookingan yang perlu direview</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        <!-- Basic File Browser end -->
+        <!-- Book Statistics end -->
 
-        <!-- validations start -->
-        <section class="validations" id="validation">
+        <!-- Book List start -->
+        <section id="book-list">
+            <h5 class="mb-2">Daftar Riwayat Bookingan</h5>
             <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Input Validation States</h4>
-                        </div>
+                <div class="col-md-6 col-xl-12">
+                    <div class="card text-center shadow-none bg-transparent border-primary">
                         <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <p>
-                                        You can indicate invalid and valid form fields with <code>.is-invalid</code> and <code>.is-valid</code>.
-                                        Note that <code>.invalid-feedback</code> is also supported with these classes.
-                                    </p>
-                                </div>
-                                <div class="col-sm-6 col-12">
-                                    <label for="valid-state">Valid State</label>
-                                    <input type="text" class="form-control is-valid" id="valid-state" placeholder="Valid" value="Valid" required />
-                                    <div class="valid-feedback">This is valid state.</div>
-                                </div>
-                                <div class="col-sm-6 col-12">
-                                    <label for="invalid-state">Invalid State</label>
-                                    <input type="text" class="form-control is-invalid" id="invalid-state" placeholder="Invalid" value="Invalid" required />
-                                    <div class="invalid-feedback">This is invalid state.</div>
-                                </div>
+                            <h4 class="card-title">Saat ini anda belum memiliki riwayat Bookingan apapun</h4>
+                            <p class="card-text">Silahkan tekan tombol <strong>Book Now</strong> di atas yah</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="row match-height">
+                <div class="col-lg-12 col-12">
+                    <div class="card card-company-table">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover-animation">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:5%;">Status</th>
+                                            <th style="width:10%;">Tanggal</th>
+                                            <th style="width:40%;">Layanan</th>
+                                            <th style="width:15%;">Kendaraan</th>
+                                            <th style="width:15%;">Pemilik</th>
+                                            <th style="width:15%;">Biaya</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="avatar bg-light-primary">
+                                                    <div class="avatar-content" data-toggle="tooltip" data-placement="right" title="" data-original-title="Selesai">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor font-medium-3"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span>12 Apr, 21</span>
+                                            </td>
+                                            <td>
+                                                <div class="font-weight-bolder">Cuci Mobil Large Reguler Interior dan Eksterior</div>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <div class="d-flex flex-column">
+                                                    <span class="font-weight-bolder mb-25">B 1234 CD</span>
+                                                    <span class="font-small-2 text-muted">Toyota</span>
+                                                </div>
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <div class="d-flex flex-column">
+                                                    <span class="font-weight-bolder mb-25">Uzumaki Naruto</span>
+                                                    <span class="font-small-2 text-muted">0812345678</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="font-weight-bolder">Rp 50.000</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- validations end -->
-
-        <!-- Tooltip validations start -->
-        <section class="tooltip-validations" id="tooltip-validation">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
+                {{-- <div class="col-lg-4 col-12">
+                    <div class="card card-transaction border-warning">
                         <div class="card-header">
-                            <h4 class="card-title">Input Validation States with Tootltips</h4>
+                            <h4 class="card-title">Berikan Review Terbaik Pada Bookinganmu!</h4>
                         </div>
                         <div class="card-body">
-                            <p>
-                                <code>.{valid/invalid}-feedback</code> classes for <code>.{valid/invalid}-tooltip</code> classes to display
-                                validation feedback in a styled tooltip.
-                            </p>
-                            <form class="needs-validation" novalidate>
-                                <div class="form-row">
-                                    <div class="col-md-4 col-12 mb-3">
-                                        <label for="validationTooltip01">First name</label>
-                                        <input type="text" class="form-control" id="validationTooltip01" placeholder="First name" value="Mark" required />
-                                        <div class="valid-tooltip">Looks good!</div>
+                            <div class="transaction-item">
+                                <div class="media">
+                                    <div class="avatar bg-light-warning rounded">
+                                        <div class="avatar-content">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info avatar-icon font-medium-3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 col-12 mb-3">
-                                        <label for="validationTooltip02">Last name</label>
-                                        <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" value="Otto" required />
-                                        <div class="valid-tooltip">Looks good!</div>
-                                    </div>
-                                    <div class="col-md-4 col-12 mb-3">
-                                        <label for="validationTooltip03">City</label>
-                                        <input type="text" class="form-control" id="validationTooltip03" placeholder="City" required />
-                                        <div class="invalid-tooltip">Please provide a valid city.</div>
+                                    <div class="media-body">
+                                        <a href="#"><h6 class="transaction-title text-warning">Toyota - B 1234 CD</h6></a>
+                                        <small>Cuci Mobil Large Reguler Interior dan Eksterior</small>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                            </form>
+                                <div class="font-weight-bolder">12 Apr, 2021</div>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="media">
+                                    <div class="avatar bg-light-warning rounded">
+                                        <div class="avatar-content">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info avatar-icon font-medium-3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <a href="#"><h6 class="transaction-title text-warning">Toyota - B 1234 CD</h6></a>
+                                        <small>Cuci Mobil Large Reguler Interior dan Eksterior</small>
+                                    </div>
+                                </div>
+                                <div class="font-weight-bolder">12 Apr, 2021</div>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="media">
+                                    <div class="avatar bg-light-warning rounded">
+                                        <div class="avatar-content">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info avatar-icon font-medium-3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <a href="#"><h6 class="transaction-title text-warning">Toyota - B 1234 CD</h6></a>
+                                        <small>Cuci Mobil Large Reguler Interior dan Eksterior</small>
+                                    </div>
+                                </div>
+                                <div class="font-weight-bolder">12 Apr, 2021</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div> --}}
+            </div> --}}
         </section>
-        <!-- Tooltip validations end -->
+        <!-- Book List end -->
 
     </div>
 @endsection
