@@ -19,7 +19,7 @@ class BookPolicy
     */
     public function before(User $user, $ability)
     {
-        return $user->type === User::ADMIN_TYPE;
+        return $user->grantAllActions();
     }
 
     /**
@@ -42,7 +42,19 @@ class BookPolicy
      */
     public function view(User $user, Book $book)
     {
-        //
+        return $user->id === $book->customer_id;
+    }
+
+    /**
+     * Determine whether the user can view the invoice of the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Book  $book
+     * @return mixed
+     */
+    public function viewInvoice(User $user, Book $book)
+    {
+        return $user->id === $book->customer_id && $book->invoice_number != null;
     }
 
     /**
@@ -113,17 +125,30 @@ class BookPolicy
      */
     public function cancel(User $user, Book $book)
     {
-        return $user->id === $book->customer_id;
+        return $user->id === $book->customer_id && $book->can_be_canceled;
     }
 
     /**
      * Determine whether the user can cancel the model.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Book  $book
      * @return mixed
      */
-    public function finish(User $user)
+    public function finish(User $user, Book $book)
     {
-        return $user->type === User::ADMIN_TYPE;
+        return $user->type === User::ADMIN_TYPE && $book->can_be_finished;
+    }
+
+    /**
+     * Determine whether the user can cancel the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Book  $book
+     * @return mixed
+     */
+    public function createReview(User $user, Book $book)
+    {
+        return $user->type === User::CUSTOMER_TYPE && $book->state === 'finished' && $book->review()->count() == 0;
     }
 }

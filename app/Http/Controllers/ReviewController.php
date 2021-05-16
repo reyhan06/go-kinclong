@@ -6,7 +6,7 @@ use App\Models\{
     Book,
     Review
 };
-use App\Http\Requests\BookRequest;
+use App\Http\Requests\ReviewRequest;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -24,11 +24,14 @@ class ReviewController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  int  $book_id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($book_id)
     {
-        // return view('reviews.create', $array);
+        $book = Book::findOrFail($book_id);
+        $this->authorize('createReview', $book);
+        return view('reviews.create', compact('book'));
     }
 
     /**
@@ -42,14 +45,11 @@ class ReviewController extends Controller
     {
         $new_review = $request->validated();
 
-        $book = Book::withCount('review')->findOrFail($book_id);
-        if ($book->review_count != 0) {
-            return back()->withErrors('message', 'Maaf, Anda tidak dapat membuat ulasan baru karena bookingan ini sudah memiliki ulasan.');
-        }
+        $book = Book::findOrFail($book_id);
+        $this->authorize('createReview', $book);
+        $book->review()->create($new_review);
 
-        $review = $book->review()->create($new_review);
-
-        // return route('books.show', $book->id);
+        return redirect()->route('books.show', $book->id)->with('message', 'Review berhasil ditambahkan!');
     }
 
     /**

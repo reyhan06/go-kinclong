@@ -16,8 +16,7 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id');
-            $table->foreign('customer_id')->references('id')->on('users');
-            $table->string('code')->unique();
+            $table->foreignId('service_id');
             $table->string('invoice_number')->unique()->nullable();
             $table->string('customer_name');
             $table->string('customer_phone');
@@ -33,6 +32,7 @@ class CreateBooksTable extends Migration
             $table->string('receipt')->nullable();
             $table->datetime('schedule_start_at');
             $table->datetime('schedule_end_at')->nullable();
+            $table->string('cancel_note')->nullable();
             $table->timestamps();
         });
     }

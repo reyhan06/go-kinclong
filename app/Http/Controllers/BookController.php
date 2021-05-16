@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\{
     Book,
-    Service
+    Service,
+    User
 };
-use App\Http\Requests\BookRequest;
+use App\Http\Requests\{
+    BookRequest,
+    CancelRequest
+};
+use App\Notifications\{
+    NewBook,
+    ConfirmBook,
+    BookClosed,
+    BookIsCanceled,
+};
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -16,9 +26,23 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $user = $request->user();
+        $books = Book::latest()->when($user->isCustomer(), function($query) use($user) {
+            return $query->where('customer_id', $user->id);
+        })->when($request->filled('state'), function($query) use($request) {
+            if ($request->state == 'canceled') {
+                return $query->whereIn('state', ['canceled', 'finished']);
+            }
+            return $query->where('state', $request->state);
+        })->when($request->filled('today'), function($query) use($request) {
+            return $query->whereDate('schedule_start_at', today());
+        })->when($request->filled('review'), function($query) use($request) {
+            return $query->where('state', 'finished')->doesntHave('review');
+        })->get();
+
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -28,19 +52,31 @@ class BookController extends Controller
      */
     public function create()
     {
-        // return route('books.create');
+        $services = Service::get(['id', 'name', 'cost'])->transform(function($service) {
+            $service->cost = toRupiah($service->cost);
+            return $service;
+        });
+        $user = request()->user()->makeHidden(['id', 'username', 'type', 'email', 'created_at', 'updated_at']);
+        $times = Book::getTimes();
+        return view('books.create', compact('services', 'user', 'times'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  BookRequest  $request
-     * @return RedirectResponse
+     * @param  \App\Http\Requests\BookRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(BookRequest $request)
     {
         $new_book = $request->validated();
+
+        $new_book['schedule_start_at'] = date('Y-m-d H:i:s', strtotime($new_book['date'] .' '. $new_book['time'] .':00'));
+        unset($new_book['date']);
+        unset($new_book['time']);
+
         $service = Service::findOrFail($new_book['service_id']);
+
         $new_book = array_merge($new_book, [
             'service_name' => $service->name,
             'service_vehicle' => $service->vehicle,
@@ -49,11 +85,12 @@ class BookController extends Controller
             'service_type' => $service->type,
             'service_cost' => $service->cost,
         ]);
-        $new_book['code'] = Book::generateCode($new_book['date']);
 
-        $book = $request->user()->books()->create($new_book);
+        $new_book = $request->user()->books()->create($new_book);
 
-        // return route('books.show', $book->id);
+        User::getAdmin()->notify((new NewBook($new_book)));
+
+        return redirect()->route('books.show', $new_book->id)->with('message', 'Bookingan Anda berhasil dibuat!');
     }
 
     /**
@@ -64,7 +101,29 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::findOrFail($id);
+        $this->authorize('view', $book);
+        $is_customer = request()->user()->isCustomer();
+        if ($is_customer) {
+            return view('books.show', compact('book', 'is_customer'));
+        }
+        else {
+            if ($book->is_finished_or_canceled) {
+                return view('books.show', compact('book', 'is_customer'));
+            }
+            $services = Service::get(['id', 'name', 'cost'])->transform(function($service) {
+                $service->cost = toRupiah($service->cost);
+                return $service;
+            });
+            $above_or_equal_this_time = timeFormat($book->schedule_start_at);
+            $times = Book::getTimes($above_or_equal_this_time);
+            if ($book->is_new) {
+                return view('books.confirm', compact('book', 'services', 'times'));
+            }
+            else {
+                return view('books.show', compact('book', 'is_customer', 'services', 'times'));
+            }
+        }
     }
 
     /**
@@ -108,52 +167,41 @@ class BookController extends Controller
      * @param int $id
      * @return return type
      */
-    public function confirmNewBook(Request $request, $id)
+    public function confirmNewBook(BookRequest $request, $id)
     {
-        $this->validate($request, [
-            'accepted' => ['required', 'boolean'],
-            'start_at' => ['required', 'date'],
-            'end_at' => ['required', 'date'],
-        ]);
-
         $book = Book::findOrFail($id);
-        $next_possible_states = $book->getNextPossibleStates();
-        if ($request->accepted) {
-            // Validate new schedule
-            $schedule = Schedule::whereDate('start_at', '>=', $request->start_at)
-                                ->whereDate('end_at', '<=', $request->end_at)
-                                ->where('reserved', 0)
-                                ->first();
-            if ($schedule) {
-                return response()->withErrors('message', 'Maaf, jadwal ini telah dipesan. Silahkan pilih jadwal yang lain');
-            }
+        $update_book = $request->validated();
 
-            $schedule = Schedule::updateOrCreate(
-                [
-                    'book_id' => $book->id,
-                    'book_code' => $book->code,
-                ],
-                [
-                    'duration' => Schedule::getDuration($request->start_at, $request->end_at),
-                    'start_at' => $request->start_at,
-                    'end_at' => $request->end_at,
-                    'reserved' => 1,
-                ]
-            );
+        $update_book['invoice_number'] = 'INV/'. date('Ymd', strtotime($update_book['date'])) .'/'. mt_rand(10000000,99999999);
+        $update_book['schedule_start_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['time'] .':00'));
+        $update_book['schedule_end_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['end_time'] .':00'));
+        unset($update_book['date']);
+        unset($update_book['time']);
+        unset($update_book['end_time']);
 
-            //!! $book->receipt = $receipt;
-            // $book->state = $next_possible_states[0];
-            // $book->date = $request->start_at;
-            // $book->save();
-            // notify customer via mail
-            // return back with success notify
+        if ($book->service_id != $update_book['service_id']) {
+            $service = Service::findOrFail($update_book['service_id']);
+
+            $update_book = array_merge($update_book, [
+                'service_name' => $service->name,
+                'service_vehicle' => $service->vehicle,
+                'service_size' => $service->size,
+                'service_service' => $service->service,
+                'service_type' => $service->type,
+                'service_cost' => $service->cost,
+
+                'state' => Book::STATE[1]
+            ]);
         }
         else {
-            //!! $book->state = $next_possible_states[1];
-            // $book->save();
-            // notify customer via mail
-            // return back with success notify
+            $update_book['state'] = Book::STATE[1];
         }
+
+        $book->update($update_book);
+
+        User::findOrFail($book->customer_id)->notify((new ConfirmBook($book)));
+
+        return redirect()->route('books.show', $book->id)->with('message', 'Bookingan berhasil dikonfirmasi');
     }
 
     /**
@@ -163,23 +211,41 @@ class BookController extends Controller
      * @param string $next_state
      * @return \Illuminate\Http\Response
      */
-    public function end($id, $next_state)
+    public function end(BookRequest $request, $id)
     {
         $book = Book::findOrFail($id);
+        $this->authorize('finish', $book);
+        $update_book = $request->validated();
 
-        if (request()->user()->cannot('finish', Book::class)) {
-            return back()->withErrors('message', 'Maaf, Anda tidak memiliki wewenang untuk menyelesaikan bookingan ini.');
+        $update_book['schedule_start_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['time'] .':00'));
+        $update_book['schedule_end_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['end_time'] .':00'));
+        unset($update_book['date']);
+        unset($update_book['time']);
+        unset($update_book['end_time']);
+
+        if ($book->service_id != $update_book['service_id']) {
+            $service = Service::findOrFail($update_book['service_id']);
+
+            $update_book = array_merge($update_book, [
+                'service_name' => $service->name,
+                'service_vehicle' => $service->vehicle,
+                'service_size' => $service->size,
+                'service_service' => $service->service,
+                'service_type' => $service->type,
+                'service_cost' => $service->cost,
+
+                'state' => Book::STATE[2]
+            ]);
+        }
+        else {
+            $update_book['state'] = Book::STATE[2];
         }
 
-        $next_possible_states = $book->getNextPossibleStates();
-        if (! in_array($next_state, $next_possible_states)) {
-            return back()->withErrors('message', 'Maaf, Sistem tidak mengenali status bookingan yang diminta.');
-        }
-
-        $book->update([ 'state' => $next_possible_states[ array_search($next_state, $next_possible_states) ] ]);
+        $book->update($update_book);
+        User::findOrFail($book->customer_id)->notify((new BookClosed($book)));
 
         //!! notify customer via mail
-        // return route('books.show', $book->id) // with success
+        return redirect()->route('books.show', $book->id)->with('message', 'Bookingan berhasil diselesaikan!');
     }
 
     /**
@@ -188,23 +254,22 @@ class BookController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function cancel($id)
+    public function cancel(CancelRequest $request, $id)
     {
-        $book = Book::with('schedule')->findOrFail($id);
+        $book = Book::findOrFail($id);
+        $this->authorize('cancel', $book);
+        $to_cancel = $request->validated();
+        $to_cancel['state'] = $request->user()->isCustomer()
+            ? Book::STATE[4]
+            : Book::STATE[3];
 
-        if (request()->user()->cannot('cancel', $book)) {
-            return back()->withErrors('message', 'Maaf, Anda tidak memiliki wewenang untuk membatalkan bookingan ini.');
-        }
+        $book->update($to_cancel);
 
-        if ($book->schedule) {
-            $book->schedule->update([ 'reserved' => 0 ]);
-        }
+        $canceled_book = new BookIsCanceled($book);
+        User::findOrFail($book->customer_id)->notify($canceled_book);
+        User::getAdmin()->notify($canceled_book);
 
-        $next_possible_states = $book->getNextPossibleStates();
-        $book->update([ 'state' => end($next_possible_states) ]);
-
-        //!! notify admin via mail
-        // return route('books.show', $book->id) // with success
+        return redirect()->route('books.show', $book->id)->with('message', 'Bookingan berhasil dibatalkan!');
     }
 
     /**
@@ -216,8 +281,23 @@ class BookController extends Controller
     public function viewInvoice($id)
     {
         $book = Book::findOrFail($id);
+        $this->authorize('viewInvoice', $book);
 
-        // return view('books.receipt-view', $book);
+        return view('books.invoice', compact('book'));
+    }
+
+    /**
+     * Edit state of the book
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editStateToCancel($id)
+    {
+        $book = Book::findOrFail($id);
+        $this->authorize('cancel', $book);
+
+        return view('books.cancel', compact('id'));
     }
 
     /**

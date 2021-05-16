@@ -13,6 +13,7 @@
 
     <!-- BEGIN: Vendor CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('vendors/css/vendors.min.css') }}">
+    @yield('vendor_css')
     <!-- END: Vendor CSS-->
 
     <!-- BEGIN: Theme CSS-->
@@ -23,6 +24,7 @@
 
     <!-- BEGIN: Page CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/core/menu/menu-types/horizontal-menu.css') }}">
+    @yield('page_css')
     <!-- END: Page CSS-->
 
 </head>
@@ -65,86 +67,47 @@
         </div>
         <div class="navbar-container d-flex content">
             <ul class="nav navbar-nav align-items-center ml-auto">
-                <li class="nav-item dropdown dropdown-notification mr-25"><a class="nav-link" href="javascript:void(0);" data-toggle="dropdown"><i class="ficon" data-feather="bell"></i><span class="badge badge-pill badge-danger badge-up">5</span></a>
+                <li class="nav-item dropdown dropdown-notification mr-25">
+                    <a class="nav-link" href="javascript:void(0);" data-toggle="dropdown">
+                        <i class="ficon" data-feather="bell"></i>
+                        @if (count($user->unreadNotifications))
+                            <span class="badge badge-pill badge-danger badge-up">{{ count($user->unreadNotifications) }}</span>
+                        @endif
+                    </a>
                     <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
                         <li class="dropdown-menu-header">
                             <div class="dropdown-header d-flex">
-                                <h4 class="notification-title mb-0 mr-auto">Notifications</h4>
-                                <div class="badge badge-pill badge-light-primary">6 New</div>
+                                <h4 class="notification-title mb-0 mr-auto">Pemberitahuan</h4>
+                                <div class="badge badge-pill badge-light-primary">{{ count($user->unreadNotifications) }} Baru</div>
                             </div>
                         </li>
-                        <li class="scrollable-container media-list"><a class="d-flex" href="javascript:void(0)">
-                                <div class="media d-flex align-items-start">
-                                    <div class="media-left">
-                                        <div class="avatar"><img src="../../../app-assets/images/portrait/small/avatar-s-15.jpg" alt="avatar" width="32" height="32"></div>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="media-heading"><span class="font-weight-bolder">Congratulation Sam 🎉</span>winner!</p><small class="notification-text"> Won the monthly best seller badge.</small>
-                                    </div>
-                                </div>
-                            </a><a class="d-flex" href="javascript:void(0)">
-                                <div class="media d-flex align-items-start">
-                                    <div class="media-left">
-                                        <div class="avatar"><img src="../../../app-assets/images/portrait/small/avatar-s-3.jpg" alt="avatar" width="32" height="32"></div>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="media-heading"><span class="font-weight-bolder">New message</span>&nbsp;received</p><small class="notification-text"> You have 10 unread messages</small>
-                                    </div>
-                                </div>
-                            </a><a class="d-flex" href="javascript:void(0)">
-                                <div class="media d-flex align-items-start">
-                                    <div class="media-left">
-                                        <div class="avatar bg-light-danger">
-                                            <div class="avatar-content">MD</div>
+                        <li class="scrollable-container media-list">
+                            @foreach ($user->unreadNotifications as $notification)
+                                <a class="d-flex" href="{{ $notification->data['url'] }}">
+                                    <div class="media d-flex align-items-start">
+                                        <div class="media-left">
+                                            {!! $notification->data['icon_html'] !!}
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="media-heading">{{ $notification->data['message_title'] }}</p>
+                                            <small class="notification-text">{{ $notification->data['message_description'] }}</small>
                                         </div>
                                     </div>
-                                    <div class="media-body">
-                                        <p class="media-heading"><span class="font-weight-bolder">Revised Order 👋</span>&nbsp;checkout</p><small class="notification-text"> MD Inc. order updated</small>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="media d-flex align-items-center">
-                                <h6 class="font-weight-bolder mr-auto mb-0">System Notifications</h6>
-                                <div class="custom-control custom-control-primary custom-switch">
-                                    <input class="custom-control-input" id="systemNotification" type="checkbox" checked="">
-                                    <label class="custom-control-label" for="systemNotification"></label>
-                                </div>
-                            </div><a class="d-flex" href="javascript:void(0)">
-                                <div class="media d-flex align-items-start">
-                                    <div class="media-left">
-                                        <div class="avatar bg-light-danger">
-                                            <div class="avatar-content"><i class="avatar-icon" data-feather="x"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="media-heading"><span class="font-weight-bolder">Server down</span>&nbsp;registered</p><small class="notification-text"> USA Server is down due to hight CPU usage</small>
-                                    </div>
-                                </div>
-                            </a><a class="d-flex" href="javascript:void(0)">
-                                <div class="media d-flex align-items-start">
-                                    <div class="media-left">
-                                        <div class="avatar bg-light-success">
-                                            <div class="avatar-content"><i class="avatar-icon" data-feather="check"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="media-heading"><span class="font-weight-bolder">Sales report</span>&nbsp;generated</p><small class="notification-text"> Last month sales report generated</small>
-                                    </div>
-                                </div>
-                            </a><a class="d-flex" href="javascript:void(0)">
-                                <div class="media d-flex align-items-start">
-                                    <div class="media-left">
-                                        <div class="avatar bg-light-warning">
-                                            <div class="avatar-content"><i class="avatar-icon" data-feather="alert-triangle"></i></div>
-                                        </div>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="media-heading"><span class="font-weight-bolder">High memory</span>&nbsp;usage</p><small class="notification-text"> BLR Server using high memory</small>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            @endforeach
                         </li>
-                        <li class="dropdown-menu-footer"><a class="btn btn-primary btn-block" href="javascript:void(0)">Read all notifications</a></li>
+                        <li class="dropdown-menu-footer">
+                            @if (count($user->unreadNotifications))
+                                <!-- Mark all as read -->
+                                <form method="POST" action="{{ route('notifications.mark_all_as_read') }}">
+                                    @csrf
+                                    <a class="btn btn-primary btn-block" href="{{ route('notifications.mark_all_as_read') }}" onclick="event.preventDefault();
+                                        this.closest('form').submit();">Saya sudah membaca semuanya</a>
+                                </form>
+                            @else
+                                <span>Saat ini, Anda belum memiliki notifikasi baru</span>
+                            @endif
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown dropdown-user">
@@ -176,7 +139,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between w-100" href="app-file-manager.html">
                 <div class="d-flex">
-                    <div class="mr-75"><img src="../../../app-assets/images/icons/xls.png" alt="png" height="32"></div>
+                    <div class="mr-75"><img src="{{ asset('images/icons/xls.png') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Two new item submitted</p><small class="text-muted">Marketing Manager</small>
                     </div>
@@ -184,7 +147,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between w-100" href="app-file-manager.html">
                 <div class="d-flex">
-                    <div class="mr-75"><img src="../../../app-assets/images/icons/jpg.png" alt="png" height="32"></div>
+                    <div class="mr-75"><img src="{{ asset('images/icons/jpg.png') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">52 JPG file Generated</p><small class="text-muted">FontEnd Developer</small>
                     </div>
@@ -192,7 +155,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between w-100" href="app-file-manager.html">
                 <div class="d-flex">
-                    <div class="mr-75"><img src="../../../app-assets/images/icons/pdf.png" alt="png" height="32"></div>
+                    <div class="mr-75"><img src="{{ asset('images/icons/pdf.png') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">25 PDF File Uploaded</p><small class="text-muted">Digital Marketing Manager</small>
                     </div>
@@ -200,7 +163,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between w-100" href="app-file-manager.html">
                 <div class="d-flex">
-                    <div class="mr-75"><img src="../../../app-assets/images/icons/doc.png" alt="png" height="32"></div>
+                    <div class="mr-75"><img src="{{ asset('images/icons/doc.png') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Anna_Strong.doc</p><small class="text-muted">Web Designer</small>
                     </div>
@@ -211,7 +174,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between py-50 w-100" href="app-user-view.html">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-75"><img src="../../../app-assets/images/portrait/small/avatar-s-8.jpg" alt="png" height="32"></div>
+                    <div class="avatar mr-75"><img src="{{ asset('images/portrait/small/avatar-s-8.jpg') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">John Doe</p><small class="text-muted">UI designer</small>
                     </div>
@@ -219,7 +182,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between py-50 w-100" href="app-user-view.html">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-75"><img src="../../../app-assets/images/portrait/small/avatar-s-1.jpg" alt="png" height="32"></div>
+                    <div class="avatar mr-75"><img src="{{ asset('images/portrait/small/avatar-s-1.jpg') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Michal Clark</p><small class="text-muted">FontEnd Developer</small>
                     </div>
@@ -227,7 +190,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between py-50 w-100" href="app-user-view.html">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-75"><img src="../../../app-assets/images/portrait/small/avatar-s-14.jpg" alt="png" height="32"></div>
+                    <div class="avatar mr-75"><img src="{{ asset('images/portrait/small/avatar-s-14.jpg') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Milena Gibson</p><small class="text-muted">Digital Marketing Manager</small>
                     </div>
@@ -235,7 +198,7 @@
             </a></li>
         <li class="auto-suggestion"><a class="d-flex align-items-center justify-content-between py-50 w-100" href="app-user-view.html">
                 <div class="d-flex align-items-center">
-                    <div class="avatar mr-75"><img src="../../../app-assets/images/portrait/small/avatar-s-6.jpg" alt="png" height="32"></div>
+                    <div class="avatar mr-75"><img src="{{ asset('images/portrait/small/avatar-s-6.jpg') }}" alt="png" height="32"></div>
                     <div class="search-data">
                         <p class="search-data-title mb-0">Anna Strong</p><small class="text-muted">Web Designer</small>
                     </div>
@@ -272,6 +235,7 @@
 
     <!-- BEGIN: Vendor JS-->
     <script src="{{ asset('vendors/js/vendors.min.js') }}"></script>
+    @yield('vendor_js')
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Theme JS-->
@@ -280,7 +244,7 @@
     <!-- END: Theme JS-->
 
     <!-- BEGIN: Page JS-->
-    @yield('js')
+    @yield('page_js')
     <!-- END: Page JS-->
 
     <script>

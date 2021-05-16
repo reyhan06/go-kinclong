@@ -33,7 +33,7 @@
         </div>
         <div class="content-header-right text-md-right col-md-3 col-12 d-md-block d-none">
             <div class="form-group breadcrumb-right">
-                <button type="button" class="btn btn-primary waves-effect waves-float waves-light">Book Now</button>
+                <a href="{{ route('books.create') }}" class="btn btn-primary waves-effect waves-float waves-light">Book Now</a>
             </div>
         </div>
     </div>

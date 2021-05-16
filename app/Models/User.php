@@ -66,4 +66,34 @@ class User extends Authenticatable
     {
         return $this->hasMany(Book::class, 'customer_id', 'id');
     }
+
+    /**
+     * Get Admin
+     *
+     * @return User
+     */
+    public static function getAdmin()
+    {
+        return self::findOrFail(1);
+    }
+
+    /**
+     * Determine if the user is a customer
+     *
+     * @return bool
+     */
+    public function isCustomer()
+    {
+        return $this->type === 'customer';
+    }
+
+    /**
+     * Determine if the user can do all actions
+     *
+     * @return bool
+     */
+    public function grantAllActions()
+    {
+        return $this->type === 'admin' ? true : null;
+    }
 }

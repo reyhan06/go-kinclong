@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     BookController as Book,
     ReviewController as Review,
     UserController as User,
+    NotificationController as Notification,
 };
 
 /*
@@ -32,6 +33,10 @@ Route::get('/tes', function () {
 });
 
 Route::middleware(['auth'])->group(function() {
+    Route::name('notifications.')->prefix('notifications')->group(function() {
+        Route::post('/mark-all-as-read', [Notification::class, 'markAllAsRead'])->name('mark_all_as_read');
+    });
+
     Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
 
     Route::name('books.')->prefix('books')->group(function() {
@@ -42,7 +47,11 @@ Route::middleware(['auth'])->group(function() {
         Route::prefix('{id}')->group(function() {
             Route::get('/', [Book::class, 'show'])->name('show');
             Route::get('/invoice', [Book::class, 'viewInvoice'])->name('invoice');
+            Route::get('/review', [Review::class, 'create'])->name('add_review');
+            Route::get('/edit-state-to-cancel', [Book::class, 'editStateToCancel'])->name('edit_state_to_cancel');
+            Route::post('/review', [Review::class, 'store'])->name('review');
             Route::put('/confirm', [Book::class, 'confirmNewBook'])->name('confirm');
+            Route::put('/update', [Book::class, 'update'])->name('update');
             Route::put('/end', [Book::class, 'end'])->name('end');
             Route::put('/cancel', [Book::class, 'cancel'])->name('cancel');
         });
