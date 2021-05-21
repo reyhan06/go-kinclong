@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     ReviewController as Review,
     UserController as User,
     NotificationController as Notification,
+    LandingController as Landing,
 };
 
 /*
@@ -21,15 +22,13 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/tes', function () {
-    $start_at = new Carbon('2021-04-03 09:00:00');
-    $end_at = new Carbon('2021-04-04 09:00:00');
-
-    return $start_at->diffInMinutes($end_at);
+Route::name('landing.')->group(function() {
+    Route::get('/', [Landing::class, 'home'])->name('home');
+    Route::get('/wash-services', [Landing::class, 'servicesList'])->name('services.index');
+    Route::get('/wash-services/{slug}', [Landing::class, 'servicesDetail'])->name('services.show');
+    Route::get('/about-us', [Landing::class, 'about'])->name('about');
+    Route::get('/contact-us', [Landing::class, 'contact'])->name('contact');
+    Route::post('/message-us', [Landing::class, 'message'])->name('message');
 });
 
 Route::middleware(['auth'])->group(function() {
