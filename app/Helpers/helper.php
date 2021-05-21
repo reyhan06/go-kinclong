@@ -7,13 +7,13 @@ function toRupiah($angka){
 
 function dateTimeFormat(string $date_time, $with_time = true){
     $format = $with_time
-        ? 'j F, Y - h:i:s'
+        ? 'j F, Y - H:i:s'
         : 'j F, Y';
 	return date($format, strtotime($date_time));
 }
 
 function timeFormat(string $date_time){
-	return date('h:i', strtotime($date_time));
+	return date('H:i', strtotime($date_time));
 }
 
 // function limitText($value, $max = 32)
