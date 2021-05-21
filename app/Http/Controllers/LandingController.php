@@ -16,7 +16,7 @@ class LandingController extends Controller
 {
     public function home()
     {
-        $reviews = Review::where('stars', '>=', 4)->latest()->take(5)->get();
+        $reviews = Review::with('book')->where('stars', '>=', 4)->latest()->take(5)->get();
 
         return view('landing.home', compact('reviews'));
     }
