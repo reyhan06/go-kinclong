@@ -173,8 +173,8 @@ class BookController extends Controller
         $update_book = $request->validated();
 
         $update_book['invoice_number'] = 'INV/'. date('Ymd', strtotime($update_book['date'])) .'/'. mt_rand(10000000,99999999);
-        $update_book['schedule_start_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['time'] .':00'));
-        $update_book['schedule_end_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['end_time'] .':00'));
+        $update_book['schedule_start_at'] = date('Y-m-d H:i:s', strtotime($update_book['date'] .' '. $update_book['time'] .':00'));
+        $update_book['schedule_end_at'] = date('Y-m-d H:i:s', strtotime($update_book['date'] .' '. $update_book['end_time'] .':00'));
         unset($update_book['date']);
         unset($update_book['time']);
         unset($update_book['end_time']);
@@ -217,8 +217,8 @@ class BookController extends Controller
         $this->authorize('finish', $book);
         $update_book = $request->validated();
 
-        $update_book['schedule_start_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['time'] .':00'));
-        $update_book['schedule_end_at'] = date('Y-m-d h:i:s', strtotime($update_book['date'] .' '. $update_book['end_time'] .':00'));
+        $update_book['schedule_start_at'] = date('Y-m-d H:i:s', strtotime($update_book['date'] .' '. $update_book['time'] .':00'));
+        $update_book['schedule_end_at'] = date('Y-m-d H:i:s', strtotime($update_book['date'] .' '. $update_book['end_time'] .':00'));
         unset($update_book['date']);
         unset($update_book['time']);
         unset($update_book['end_time']);
